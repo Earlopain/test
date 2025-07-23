@@ -7,9 +7,9 @@ jobs:
       matrix:
         os: [ ubuntu-22.04, ubuntu-24.04, ubuntu-24.04-arm ]
         test_task: [check]
-        configure: []
-        arch: []
-        timeout: []
+        configure: ['']
+        arch: ['']
+        timeout: [40]
         include:
           - test_task: check
             configure: 'cppflags=-DVM_CHECK_MODE'
@@ -24,7 +24,7 @@ jobs:
           - test_task: test-bundled-gems
       fail-fast: false
 
-    runs-on: ${{ matrix.os || 'ubuntu-22.04' }}
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Test
