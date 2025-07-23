@@ -5,7 +5,6 @@ jobs:
   make:
     strategy:
       matrix:
-        os: []
         # The ppc64le/s390x runners works only in the registered repositories.
         # They don't work in forked repositories.
         # https://github.com/IBM/actionspz/blob/main/docs/FAQ.md#what-about-forked-repos
@@ -13,7 +12,9 @@ jobs:
           - ${{ github.repository == 'ruby/ruby' }}
         include:
           - os: ubuntu-24.04-arm
+            test_task: check
           - os: ubuntu-24.04-ppc64le
+            configure: --disable-yjit
           - os: ubuntu-24.04-s390x
         exclude:
           - os: ubuntu-24.04-ppc64le
@@ -27,4 +28,3 @@ jobs:
     steps:
       - name: Test
         run: uname -a
-   
