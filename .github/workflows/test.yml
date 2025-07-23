@@ -14,7 +14,7 @@ jobs:
         # They don't work in forked repositories.
         # https://github.com/IBM/actionspz/blob/main/docs/FAQ.md#what-about-forked-repos
         upstream:
-          - ${{ github.repository == 'rubby/ruby' }}
+          - ${{ github.repository == 'Earlopain/test' }}
         include:
           - test_task: check
             configure: 'cppflags=-DVM_CHECK_MODE'
