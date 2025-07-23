@@ -24,7 +24,7 @@ jobs:
           - test_task: test-bundled-gems
       fail-fast: false
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os || ubuntu-22.04 }}
 
     steps:
       - name: Test
