@@ -1,0 +1,30 @@
+name: Ubuntu
+on: push
+
+jobs:
+  make:
+    strategy:
+      matrix:
+        os: []
+        # The ppc64le/s390x runners works only in the registered repositories.
+        # They don't work in forked repositories.
+        # https://github.com/IBM/actionspz/blob/main/docs/FAQ.md#what-about-forked-repos
+        upstream:
+          - ${{ github.repository == 'ruby/ruby' }}
+        include:
+          - os: ubuntu-24.04-arm
+          - os: ubuntu-24.04-ppc64le
+          - os: ubuntu-24.04-s390x
+        exclude:
+          - os: ubuntu-24.04-ppc64le
+            upstream: false
+          - os: ubuntu-24.04-s390x
+            upstream: false
+      fail-fast: false
+
+    runs-on: ${{ matrix.os || 'ubuntu-22.04' }}
+
+    steps:
+      - name: Test
+        run: uname -a
+   
