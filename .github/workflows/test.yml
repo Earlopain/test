@@ -5,11 +5,16 @@ jobs:
   make:
     strategy:
       matrix:
-        os: [ ubuntu-22.04, ubuntu-24.04, ubuntu-24.04-arm ]
+        os: [ ubuntu-22.04, ubuntu-24.04, ubuntu-24.04-arm, ubuntu-24.04-ppc64le, ubuntu-24.04-s390x ]
         test_task: [check]
         configure: ['']
         arch: ['']
         timeout: [40]
+        # The ppc64le/s390x runners works only in the registered repositories.
+        # They don't work in forked repositories.
+        # https://github.com/IBM/actionspz/blob/main/docs/FAQ.md#what-about-forked-repos
+        upstream:
+          - ${{ github.repository == 'ruby/ruby' }}
         include:
           - test_task: check
             configure: 'cppflags=-DVM_CHECK_MODE'
@@ -22,6 +27,11 @@ jobs:
           - test_task: test-bundler-parallel
             timeout: 50
           - test_task: test-bundled-gems
+        exclude:
+          - os: ubuntu-24.04-ppc64le
+            upstream: false
+          - os: ubuntu-24.04-s390x
+            upstream: false
       fail-fast: false
 
     runs-on: ${{ matrix.os || 'ubuntu-22.04' }}
