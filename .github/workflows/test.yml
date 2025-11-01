@@ -12,5 +12,5 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: head
-    - run: bundle.bat config --local path D:\a\test\test\vendor\bundle
+    - run: bundle config --local path D:\a\test\test\vendor\bundle
     - run: bundle install
