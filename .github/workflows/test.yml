@@ -13,5 +13,4 @@ jobs:
       with:
         ruby-version: head
     - run: bundle.bat config --local path D:\a\test\test\vendor\bundle
-    - run: bundle lock
     - run: bundle install
