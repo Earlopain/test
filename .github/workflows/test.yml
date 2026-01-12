@@ -19,6 +19,5 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.version }}
-    - run: ruby -ve 'puts File.join(Dir.home, "\u{3042 3044 3046 3048 304a}.rb".encode(Encoding::Windows_31J))'
-    - run: ruby -rtmpdir -ve 'Dir.mktmpdir { |dir| puts dir.encoding }'
-    - run: ruby -rtmpdir -ve 'Dir.mktmpdir { |dir| puts File.join(dir, "\u{3042 3044 3046 3048 304a}.rb".encode(Encoding::Windows_31J)) }'
+    - run: ruby -ve 'path = File.join(Dir.home, "\u{3042 3044 3046 3048 304a}.rb".encode(Encoding::Windows_31J)); File.write(path, "ok")'
+    - run: ruby -ve 'pp Dir["#{Dir.home}/*.rb"]'
