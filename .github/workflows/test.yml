@@ -1,16 +1,18 @@
-name: Ubuntu
+name: Test
 on: push
 
 jobs:
-  make:
-    runs-on: windows-latest
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [ruby, jruby, truffleruby]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
-    - run: echo "source 'https://rubygems.org'" >> Gemfile
-    - run: echo "gem 'nokogiri'" >> Gemfile
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: head
-    - run: bundle config --local path D:\a\test\test\vendor\bundle
-    - run: bundle install
+        ruby-version: ${{ matrix.version }}
+    - run: ruby -ve 'puts File.join(Dir.home, "\u{3042 3044 3046 3048 304a}.rb".encode(Encoding::Windows_31J))'
